@@ -19,6 +19,8 @@ jobs:
       boost_version: 1.83.0
       BOOST_ROOT: ${{ github.workspace }}/deps/boost_1_83_0
       RIME_PLUGINS: ${{ inputs.rime_plugins }}
+      CMAKE_GENERATOR: Ninja
+      
     steps:
       - name: Checkout last commit
         uses: actions/checkout@v4
@@ -28,9 +30,7 @@ jobs:
 
       - name: Configure build environment
         run: |
-          brew install llvm ninja
-          echo "CMAKE_GENERATOR=Ninja"  >> $GITHUB_ENV
-          echo "/usr/local/opt/llvm/bin" >> $GITHUB_PATH
+          brew install ninja
           echo git_ref_name="$(git describe --always)" >> $GITHUB_ENV
 
       - name: Configure build variant
