@@ -16,10 +16,12 @@ jobs:
       fail-fast: false
       matrix:
         compiler: [msvc, clang]
+        include:
+          - { compiler: msvc, cc: cl, cxx: cl, bjam_toolset: "msvc-14.3" }
+          - { compiler: clang, cc: clang, cxx: clang++, bjam_toolset: "clang-win" }
     env:
       boost_version: 1.83.0
       BOOST_ROOT: ${{ github.workspace }}\deps\boost_1_83_0
-      build_script: ${{ matrix.compiler == 'msvc' && './build.bat' || './build-clang.bat' }}
       RIME_PLUGINS: ${{ inputs.rime_plugins }}
 
     steps:
@@ -30,15 +32,14 @@ jobs:
           submodules: recursive
 
       - name: Create env.bat
-        if: ${{ matrix.compiler == 'msvc' }}
         run: |
-          
           $envfile = ".\env.bat"
           $envcontent = @"
             set RIME_ROOT=%CD%
             if not defined BOOST_ROOT set BOOST_ROOT=%RIME_ROOT%\deps\boost_1_83_0
-            set CXX=cl
-            set CC=cl
+            set BJAM_TOOLSET=${{ matrix.bjam_toolset }}
+            set CXX=${{ matrix.cxx }}
+            set CC=${{ matrix.cc }}
             set CMAKE_GENERATOR=Ninja
           "@
           Set-Content -Path $envfile -Value $envcontent
@@ -52,10 +53,6 @@ jobs:
 
       - name: Configure Ninja
         run: pip install ninja
-
-      - name: Configure clang
-        if: ${{ matrix.compiler == 'clang' }}
-        run: choco upgrade -y llvm
 
       - name: Configure build environment
         run: |
@@ -92,7 +89,7 @@ jobs:
 
       - name: Install Boost
         if: steps.cache-boost-lib.outputs.cache-hit != 'true'
-        run: ${{ env.build_script }} boost
+        run: .\build.bat boost
 
       - name: Cache dependencies
         id: cache-deps
@@ -107,13 +104,13 @@ jobs:
 
       - name: Build dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
-        run: ${{ env.build_script }} deps
+        run: .\build.bat deps
 
       - name: Install Rime plugins
         run: .\action-install-plugins-windows.bat
 
       - name: Build and test
-        run: ${{ env.build_script }} test
+        run: .\build.bat test
 
       - name: Create distributable
         run: |
