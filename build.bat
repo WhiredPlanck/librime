@@ -17,6 +17,9 @@ if not defined RIME_ROOT set RIME_ROOT=%CD%
 echo RIME_ROOT=%RIME_ROOT%
 echo.
 
+set CUR_CC=%CC%
+set CUR_CXX=%CXX%
+
 if defined BOOST_ROOT (
   if exist "%BOOST_ROOT%\boost" goto boost_found
 )
@@ -158,7 +161,14 @@ if %build_boost_arm64% == 0 (
 
 if %build_boost% == 1 (
   pushd %BOOST_ROOT%
-  if not exist b2.exe call .\bootstrap.bat
+  if not exist b2.exe (
+    rem Here we still use msvc toolchain to bootstrap b2, temporarily set the compilers to msvc family.
+    set CC=cl
+    set CXX=cl
+    call .\bootstrap.bat %BS_TOOLSET%
+    set CC=%CUR_CC%
+    set CXX=%CUR_CXX%
+  )
   if errorlevel 1 goto error
 
   if %build_boost_x86% == 1 (
