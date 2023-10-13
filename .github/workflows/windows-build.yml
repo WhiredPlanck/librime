@@ -89,7 +89,7 @@ jobs:
 
       - name: Install Boost
         if: steps.cache-boost-lib.outputs.cache-hit != 'true'
-        run: .\build.bat boost
+        run: .\build.bat boost_x64
 
       - name: Cache dependencies
         id: cache-deps
