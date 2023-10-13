@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-RIME_ROOT="$(cd "$(dirname "$0")"; pwd)"
+RIME_ROOT="$(cd "$(dirname "$0")"/..; pwd)"
 
 boost_version="${boost_version=1.83.0}"
 boost_x_y_z="${boost_version//./_}"

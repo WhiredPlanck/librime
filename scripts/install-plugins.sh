@@ -2,7 +2,7 @@
 
 set -e
 
-cd "$(dirname "$0")"
+cd "$(dirname "$0")"/..
 
 clone_options=(
     # for GitHub pull request #1, git checkout 1/merge

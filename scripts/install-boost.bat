@@ -1,6 +1,6 @@
 setlocal
 
-if not defined RIME_ROOT set RIME_ROOT=%CD%
+if not defined RIME_ROOT set RIME_ROOT=%CD%\..
 
 if not defined boost_version set boost_version=1.83.0
 set boost_x_y_z=%boost_version:.=_%

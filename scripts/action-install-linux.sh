@@ -16,6 +16,6 @@ sudo apt update -y
 # https://github.com/kadalu-tech/pkgs/pull/2/files#r1001042597
 sudo apt install -y libunwind-dev ninja-build ${dep_packages[@]}
 
-make deps/gtest
-make -C deps/opencc build
-sudo env "PATH=$PATH" make -C deps/opencc install
+make ../deps/gtest
+make -C ../deps/opencc build
+sudo env "PATH=$PATH" make -C ../deps/opencc install

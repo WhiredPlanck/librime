@@ -107,7 +107,7 @@ jobs:
         run: .\build.bat deps
 
       - name: Install Rime plugins
-        run: .\action-install-plugins-windows.bat
+        run: .\scripts\action-install-plugins-windows.bat
 
       - name: Build and test
         run: .\build.bat test
@@ -167,7 +167,7 @@ jobs:
           echo git_ref_name="$(git describe --always)" >> $GITHUB_ENV
 
       - name: Install Rime plugins
-        run: ./action-install-plugins-macos.sh
+        run: ./scripts/action-install-plugins-macos.sh
 
       - name: Build with mingw-w64
         run: |

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-export RIME_ROOT="$(cd "$(dirname "$0")"; pwd)"
+export RIME_ROOT="$(cd "$(dirname "$0")"/..; pwd)"
 
-echo "RIME_PLUGINS=${RIME_PLUGINS}" > version-info.txt
-echo "librime $(git describe --always)" >> version-info.txt
+echo "RIME_PLUGINS=${RIME_PLUGINS}" > ../version-info.txt
+echo "librime $(git describe --always)" >> ../version-info.txt
 
 function action_install_plugin() {
     local plugin="$1"

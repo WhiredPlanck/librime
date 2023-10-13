@@ -1,6 +1,6 @@
 setlocal
 
-if not defined RIME_ROOT set RIME_ROOT=%CD%
+if not defined RIME_ROOT set RIME_ROOT=%CD%\..
 
 rem for GitHub pull request #1, git checkout 1/merge
 set clone_options=^
@@ -8,9 +8,9 @@ set clone_options=^
  --depth 1 ^
  --no-single-branch
 
-echo RIME_PLUGINS=%RIME_PLUGINS% > version-info.txt
-echo librime >> version-info.txt
-git describe --always >> version-info.txt
+echo RIME_PLUGINS=%RIME_PLUGINS% > ..\version-info.txt
+echo librime >> ..\version-info.txt
+git describe --always >> ..\version-info.txt
 
 if defined RIME_PLUGINS (
   for %%s in (%RIME_PLUGINS%) do call :install_plugin %%s || exit /b
@@ -31,7 +31,7 @@ if %slug% == %plugin% (
   set branch=%plugin:*@=%
 )
 set plugin_project=%slug:*/=%
-set plugin_dir=plugins\%plugin_project:librime-=%
+set plugin_dir=..\plugins\%plugin_project:librime-=%
 git clone %clone_options% "https://github.com/%slug%.git" %plugin_dir%
 if errorlevel 1 exit /b
 rem pull request ref doesn't work with git clone --branch

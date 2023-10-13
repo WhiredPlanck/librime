@@ -4,7 +4,7 @@ rem Maintainer: Chen Gong <chen.sst@gmail.com>
 
 setlocal
 
-if not exist env.bat copy env.bat.template env.bat
+if not exist env.bat copy scripts\env.bat.template env.bat
 
 if exist env.bat call .\env.bat
 
