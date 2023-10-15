@@ -15,9 +15,15 @@ jobs:
       - name: Checkout last commit
         uses: actions/checkout@v4
       - name: Install clang-format
-        run: sudo apt install -y clang-format
+        uses: myci-actions/add-deb-repo@11
+        with:
+          repo: 'deb https://apt.llvm.org/jammy/ llvm-toolchain-jammy-17 main'
+          repo-name: llvm
+          keys-asc: https://apt.llvm.org/llvm-snapshot.gpg.key
+          install: clang-format-17
       - name: Lint
-        run: find src -name '*.cc' -o -name '*.h' | xargs clang-format -Werror --dry-run || { echo Please lint your code by '"'"find src -name '*.cc' -o -name '*.h' | xargs clang-format -i"'"'.; false; }
+        run: |
+          find src -name '*.cc' -o -name '*.h' | xargs clang-format-17 -Werror --dry-run || { echo Please lint your code by '"'"find src -name '*.cc' -o -name '*.h' | xargs clang-format -i"'"'.; false; }
 
   linux:
     needs: lint
