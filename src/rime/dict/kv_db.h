@@ -4,23 +4,23 @@
 //
 // 2014-12-04 Chen Gong <chen.sst@gmail.com>
 //
-#ifndef RIME_LEVEL_DB_H_
-#define RIME_LEVEL_DB_H_
+#ifndef RIME_KV_DB_H_
+#define RIME_KV_DB_H_
 
 #include <rime/dict/db.h>
 
 namespace rime {
 
-struct LevelDbCursor;
-struct LevelDbWrapper;
+struct KvDbCursor;
+struct KvDbWrapper;
 
-class LevelDb;
+class KvDb;
 
-class LevelDbAccessor : public DbAccessor {
+class KvDbAccessor : public DbAccessor {
  public:
-  LevelDbAccessor();
-  LevelDbAccessor(LevelDbCursor* cursor, const string& prefix);
-  virtual ~LevelDbAccessor();
+  KvDbAccessor();
+  KvDbAccessor(KvDbCursor* cursor, const string& prefix);
+  virtual ~KvDbAccessor();
 
   virtual bool Reset();
   virtual bool Jump(const string& key);
@@ -28,16 +28,16 @@ class LevelDbAccessor : public DbAccessor {
   virtual bool exhausted();
 
  private:
-  the<LevelDbCursor> cursor_;
+  the<KvDbCursor> cursor_;
   bool is_metadata_query_ = false;
 };
 
-class LevelDb : public Db, public Recoverable, public Transactional {
+class KvDb : public Db, public Recoverable, public Transactional {
  public:
-  LevelDb(const string& file_name,
-          const string& db_name,
-          const string& db_type = "");
-  virtual ~LevelDb();
+  KvDb(const string& file_name,
+       const string& db_name,
+       const string& db_type = "");
+  virtual ~KvDb();
 
   virtual bool Remove();
   virtual bool Open();
@@ -69,10 +69,10 @@ class LevelDb : public Db, public Recoverable, public Transactional {
  private:
   void Initialize();
 
-  the<LevelDbWrapper> db_;
+  the<KvDbWrapper> db_;
   string db_type_;
 };
 
 }  // namespace rime
 
-#endif  // RIME_LEVEL_DB_H_
+#endif  // RIME_KV_DB_H_

@@ -46,7 +46,7 @@ set(rime_core_deps
     ${CMAKE_THREAD_LIBS_INIT}
     ${rime_optional_deps})
 set(rime_dict_deps
-    ${LevelDb_LIBRARY}
+    RocksDB::rocksdb
     ${Marisa_LIBRARY})
 set(rime_gears_deps
     ${ICONV_LIBRARIES}

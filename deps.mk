@@ -9,7 +9,7 @@ endif
 
 build ?= build
 
-rime_deps = glog gtest leveldb marisa opencc yaml-cpp
+rime_deps = glog gtest rocksdb marisa opencc yaml-cpp
 
 .PHONY: all clean-src $(rime_deps)
 
@@ -19,7 +19,7 @@ all: $(rime_deps)
 clean-src:
 	rm -r $(src_dir)/glog/build || true
 	rm -r $(src_dir)/googletest/build || true
-	rm -r $(src_dir)/leveldb/build || true
+	rm -r $(src_dir)/rocksdb/build || true
 	rm -r $(src_dir)/marisa-trie/build || true
 	rm -r $(src_dir)/opencc/build || true
 	rm -r $(src_dir)/yaml-cpp/build || true
@@ -42,14 +42,10 @@ gtest:
 	-DCMAKE_INSTALL_PREFIX:PATH="$(rime_root)" \
 	&& cmake --build $(build) --target install
 
-leveldb:
-	cd $(src_dir)/leveldb; \
-	cmake . -B$(build) \
-	-DLEVELDB_BUILD_BENCHMARKS:BOOL=OFF \
-	-DLEVELDB_BUILD_TESTS:BOOL=OFF \
-	-DCMAKE_BUILD_TYPE:STRING="Release" \
-	-DCMAKE_INSTALL_PREFIX:PATH="$(rime_root)" \
-	&& cmake --build $(build) --target install
+rocksdb:
+	cd $(src_dir)/rocksdb; \
+	make static_lib \
+	&& PREFIX="$(rime_root)" make install-static
 
 marisa:
 	cd $(src_dir)/marisa-trie; \

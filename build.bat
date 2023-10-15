@@ -83,7 +83,7 @@ if %clean% == 1 (
   rmdir /s /q build
   rmdir /s /q deps\glog\build
   rmdir /s /q deps\googletest\build
-  rmdir /s /q deps\leveldb\build
+  rmdir /s /q deps\rocksdb\build
   rmdir /s /q deps\marisa-trie\build
   rmdir /s /q deps\opencc\build
   rmdir /s /q deps\yaml-cpp\build
@@ -122,13 +122,11 @@ if %build_deps% == 1 (
   if errorlevel 1 goto error
   popd
 
-  echo building leveldb.
-  pushd deps\leveldb
-  cmake . -B%build_dir% %deps_cmake_flags%^
-  -DLEVELDB_BUILD_BENCHMARKS:BOOL=OFF^
-  -DLEVELDB_BUILD_TESTS:BOOL=OFF
+  echo building rocksdb.
+  pushd deps\rocksdb
+  PORTABLE=1 make static_lib
   if errorlevel 1 goto error
-  cmake --build %build_dir% --config %build_config% --target install
+  PREFIX="%RIME_ROOT%" make install-static
   if errorlevel 1 goto error
   popd
 

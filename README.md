@@ -42,7 +42,7 @@ Build dependencies
   - cmake>=3.12
   - libboost>=1.74
   - libglog (optional)
-  - libleveldb
+  - librocksdb
   - libmarisa
   - libopencc>=1.0.2
   - libyaml-cpp>=0.5
@@ -52,7 +52,7 @@ Runtime dependencies
 ---
   - libboost
   - libglog (optional)
-  - libleveldb
+  - librocksdb
   - libmarisa
   - libopencc
   - libyaml-cpp
@@ -109,7 +109,7 @@ We are grateful to the makers of the following open source libraries:
   - [Boost C++ Libraries](http://www.boost.org/) (Boost Software License)
   - [google-glog](https://github.com/google/glog) (The 3-Clause BSD License)
   - [Google Test](https://github.com/google/googletest) (The 3-Clause BSD License)
-  - [LevelDB](https://github.com/google/leveldb) (The 3-Clause BSD License)
+  - [RocksDB](https://github.com/facebook/rocksdb) (GPL 2.0, Apache License 2.0)
   - [marisa-trie](https://github.com/s-yata/marisa-trie) (BSD 2-Clause License, LGPL 2.1)
   - [OpenCC](https://github.com/BYVoid/OpenCC) (Apache License 2.0)
   - [yaml-cpp](https://github.com/jbeder/yaml-cpp) (MIT License)
